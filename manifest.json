@@ -1,0 +1,17 @@
+{
+  "name": "Rez-App – dein geniales Kochbuch",
+  "short_name": "Rez-App",
+  "description": "Rezepte, Wochenplan & Einkaufsliste",
+  "start_url": "/rez-app/",
+  "scope": "/rez-app/",
+  "display": "standalone",
+  "background_color": "#FDFAF5",
+  "theme_color": "#2D4A3E",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/rez-app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/rez-app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/rez-app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/rez-app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
