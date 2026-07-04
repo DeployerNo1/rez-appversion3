@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<!-- Rez-App · created by DeployerNo1 -->
+<meta name="author" content="DeployerNo1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#2D4A3E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rez-App">
+<title>Rez-App – dein geniales Kochbuch</title>
+<link rel="manifest" href="/rez-appversion3/manifest.json">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FDFAF5;--green:#2D4A3E;--terra:#C4622D;--gold:#E8A838;
+  --gl:#EEF5F1;--bd:#EDE8DF;--mut:#6B8C7D;--tx:#1C2B26;--cr:#FFFEF9;
+}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;}
+button,input,select,textarea{font-family:inherit;}
+#app{display:flex;flex-direction:column;height:100dvh;overflow:hidden;}
+header{background:var(--green);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:56px;flex-shrink:0;box-shadow:0 2px 12px rgba(45,74,62,.3);}
+.logo{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);font-weight:700;}
+#ibanner{display:none;background:var(--gold);color:#fff;padding:10px 16px;align-items:center;justify-content:center;gap:10px;font-size:13px;font-weight:600;flex-shrink:0;}
+#ibanner button{background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.7);color:#fff;border-radius:6px;padding:5px 12px;font-weight:700;font-size:12px;cursor:pointer;}
+main{flex:1;overflow-y:auto;padding:20px 16px 88px;}
+.inner{max-width:1000px;margin:0 auto;}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--green);display:flex;border-top:1px solid rgba(255,255,255,.1);z-index:100;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:9px 4px;color:rgba(255,255,255,.55);background:none;border:none;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:color .15s;}
+.nb.on{color:var(--gold);}
+.nb .ic{font-size:22px;line-height:1;}
+h2.st{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--green);margin-bottom:4px;}
+.sub{color:var(--mut);font-size:13px;margin-bottom:20px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+.card{background:var(--cr);border-radius:12px;padding:18px;box-shadow:0 2px 14px rgba(45,74,62,.09);border:1px solid var(--bd);cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.card:nth-child(odd){transform:rotate(.35deg);}
+.card:nth-child(even){transform:rotate(-.3deg);}
+.card:hover{transform:rotate(0) translateY(-3px);box-shadow:0 8px 24px rgba(45,74,62,.16);}
+.kat{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--terra);text-transform:uppercase;margin-bottom:4px;}
+.ctitle{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--green);margin-bottom:8px;line-height:1.3;}
+.cmeta{display:flex;gap:10px;font-size:12px;color:#8AA89A;flex-wrap:wrap;margin-top:6px;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:5px 0;}
+.chip{display:inline-block;background:var(--gl);color:var(--green);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:700;}
+.chip-k{background:#FFF3E8;color:var(--terra);}
+.bp{background:var(--terra);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;}
+.bs{background:transparent;color:var(--green);border:2px solid var(--green);border-radius:8px;padding:9px 17px;font-size:14px;font-weight:600;cursor:pointer;}
+.bg{background:var(--gold);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;}
+.bd{background:transparent;color:var(--terra);border:1px solid var(--terra);border-radius:6px;padding:6px 12px;font-size:13px;cursor:pointer;}
+.bi{background:transparent;color:var(--green);border:2px solid var(--green);border-radius:8px;padding:9px 12px;font-size:16px;cursor:pointer;}
+header .bi{color:#fff;border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.12);}
+.sm{padding:6px 12px !important;font-size:12px !important;border-radius:6px !important;}
+.fl{display:block;font-size:11px;font-weight:700;color:var(--mut);letter-spacing:.07em;margin-bottom:5px;text-transform:uppercase;}
+.fi{width:100%;border-radius:8px;border:1.5px solid #D6CFBE;padding:10px 12px;font-size:14px;background:var(--bg);color:var(--tx);outline:none;}
+.fi:focus{border-color:var(--green);}
+.fsel{width:100%;border-radius:8px;border:1.5px solid #D6CFBE;padding:10px 12px;font-size:14px;background:var(--bg);color:var(--tx);outline:none;}
+.fsel:focus{border-color:var(--green);}
+.fta{width:100%;border-radius:8px;border:1.5px solid #D6CFBE;padding:10px 12px;font-size:14px;background:var(--bg);color:var(--tx);min-height:90px;resize:vertical;outline:none;}
+.fta:focus{border-color:var(--green);}
+.fg{margin-bottom:14px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.full{grid-column:1/-1;}
+.nwb{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--gl);border-radius:10px;padding:14px;margin-bottom:16px;}
+.nwc{text-align:center;}
+.nwn{font-size:19px;font-weight:700;color:var(--green);}
+.nwn span{font-size:11px;font-weight:400;}
+.nwl{font-size:10px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+.ov{position:fixed;inset:0;background:rgba(28,43,38,.6);display:flex;align-items:center;justify-content:center;z-index:500;padding:16px;}
+.mo{background:var(--bg);border-radius:16px;padding:24px;max-width:560px;width:100%;max-height:90dvh;overflow-y:auto;}
+.mh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+.mc{background:none;border:none;font-size:22px;color:var(--mut);cursor:pointer;line-height:1;}
+.wscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.wgrid{display:grid;grid-template-columns:repeat(7,minmax(160px,1fr));gap:10px;min-width:900px;}
+.dc{background:var(--cr);border-radius:10px;padding:12px;border:1px solid var(--bd);min-height:280px;display:flex;flex-direction:column;gap:8px;}
+.dl{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--green);border-bottom:2px solid var(--gold);padding-bottom:5px;}
+.mc2{background:var(--gl);border-radius:8px;padding:7px 9px;}
+.de{background:#F4F0E8;border:2px dashed #C8BFB0;border-radius:8px;padding:10px 6px;color:#9BA89D;font-size:11px;cursor:pointer;text-align:center;width:100%;}
+.meal-lbl{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.sc{background:var(--cr);border-radius:12px;border:1px solid var(--bd);padding:20px;}
+.si{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F0EBE1;}
+.si.dn{opacity:.4;}
+.si input[type=checkbox]{width:20px;height:20px;accent-color:var(--green);cursor:pointer;flex-shrink:0;}
+#scan-wrap{position:relative;background:#000;border-radius:10px;overflow:hidden;margin-bottom:12px;}
+#scan-video{width:100%;display:block;max-height:260px;}
+.sframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;aspect-ratio:2/1;border:3px solid var(--gold);border-radius:8px;box-shadow:0 0 0 2000px rgba(0,0,0,.45);pointer-events:none;}
+.sline{position:absolute;left:15%;width:70%;height:2px;background:var(--gold);animation:scan 2s ease-in-out infinite;pointer-events:none;}
+@keyframes scan{0%,100%{top:30%;}50%{top:68%;}}
+.iobox{background:var(--gl);border-radius:10px;padding:14px;border:1px solid var(--bd);margin-bottom:12px;}
+.iotitle{font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px;}
+.iogrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+#toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:9999;white-space:nowrap;}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+.empty{text-align:center;padding:60px 20px;}
+.empty .ei{font-size:52px;margin-bottom:14px;}
+.hidden{display:none!important;}
+.ptags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.ptag{background:var(--gl);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--green);font-weight:600;}
+.price-tag{background:#FFF3E8;color:var(--terra);border-radius:6px;padding:2px 7px;font-size:11px;font-weight:700;}
+@media(max-width:480px){
+  .g2{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .nwb{grid-template-columns:repeat(2,1fr);}
+  .iogrid{grid-template-columns:1fr;}
+  .mo{padding:18px;}
+}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+<div id="app">
+  <div id="ibanner">
+    <span id="itext">📲 App installieren — kein App Store nötig!</span>
+    <button id="ibtn">Installieren</button>
+    <button onclick="document.getElementById('ibanner').style.display='none'" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:0 4px;">✕</button>
+  </div>
+  <header>
+    <div class="logo">🍽 </div>
+    <div style="display:flex;gap:8px;">
+      <button class="bi" onclick="toggleBtc()" title="EUR ↔ Bitcoin" style="font-size:14px;font-weight:700;padding:6px 10px;">₿</button>
+      <button class="bi" onclick="showBackup()" title="Backup">💾</button>
+    </div>
+  </header>
+  <main><div class="inner" id="content"></div>
+    <div style="text-align:center;font-size:10px;color:rgba(45,74,62,.4);padding:2px 0 10px;letter-spacing:.5px;user-select:none;">created by DeployerNo1</div>
+  </main>
+  <nav>
+    <button class="nb on" id="nt-rezepte" onclick="goTab('rezepte')"><span class="ic">📋</span>Rezepte</button>
+    <button class="nb" id="nt-zutaten" onclick="goTab('zutaten')"><span class="ic">🥕</span>Zutaten</button>
+    <button class="nb" id="nt-planen"  onclick="goTab('planen')"><span class="ic">📅</span>Wochenplan</button>
+    <button class="nb" id="nt-einkauf" onclick="goTab('einkauf')"><span class="ic">🛒</span>Einkauf</button>
+  </nav>
+</div>
+
+<div id="scan-ov" class="hidden" style="position:fixed;inset:0;background:rgba(28,43,38,.7);display:flex;align-items:center;justify-content:center;z-index:8000;padding:16px;">
+  <div class="mo" style="max-width:400px;">
+    <div class="mh">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:19px;color:var(--green);font-weight:700;" id="scan-label">🔍 Produkt scannen</div>
+        <div style="font-size:12px;color:var(--mut);">EAN-8 · EAN-13 · GTIN · UPC</div>
+      </div>
+      <button class="mc" onclick="closeScanner()">✕</button>
+    </div>
+    <div id="scan-wrap">
+      <video id="scan-video" autoplay playsinline muted></video>
+      <div class="sframe"></div>
+      <div class="sline"></div>
+    </div>
+    <div id="scan-msg" style="text-align:center;font-size:13px;color:var(--mut);margin-bottom:12px;">Kamera startet…</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <div style="flex:1;height:1px;background:var(--bd);"></div>
+      <span style="font-size:11px;color:var(--mut);font-weight:700;">ODER MANUELL</span>
+      <div style="flex:1;height:1px;background:var(--bd);"></div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <input class="fi" id="mbc" inputmode="numeric" placeholder="Barcode-Nummer (EAN-8 / EAN-13 / GTIN)" style="flex:1;font-family:monospace;font-size:15px;">
+      <button class="bp" onclick="submitManual()">→</button>
+    </div>
+    <p style="font-size:11px;color:var(--mut);margin-top:6px;">Ziffern stehen unter dem Strichcode auf der Verpackung</p>
+  </div>
+</div>
+
+<div id="bak-ov" class="hidden" style="position:fixed;inset:0;background:rgba(28,43,38,.6);display:flex;align-items:center;justify-content:center;z-index:7000;padding:16px;">
+  <div class="mo" style="max-width:420px;">
+    <div class="mh">
+      <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--green);font-weight:700;">💾 Backup & Import</div>
+      <button class="mc" onclick="closeBackup()">✕</button>
+    </div>
+    <div class="iobox">
+      <div class="iotitle">📤 Export — Rezepte sichern</div>
+      <p style="font-size:13px;color:var(--mut);margin-bottom:10px;">Alle Rezepte, Wochenplan & Einkaufsliste als JSON-Datei herunterladen.</p>
+      <div class="iogrid">
+        <button class="bp" onclick="exportAll()">📥 Alles exportieren</button>
+        <button class="bs" onclick="exportRecipes()">📋 Nur Rezepte</button>
+      </div>
+    </div>
+    <div class="iobox">
+      <div class="iotitle">📥 Import — Backup wiederherstellen</div>
+      <p style="font-size:13px;color:var(--mut);margin-bottom:10px;">JSON-Datei vom letzten Export wählen.</p>
+      <div class="iogrid">
+        <button class="bg" onclick="document.getElementById('imp-merge').click()">📂 Zusammenführen</button>
+        <button class="bs" onclick="document.getElementById('imp-replace').click()">⚠️ Ersetzen</button>
+      </div>
+      <input type="file" id="imp-merge"   accept=".json" style="display:none" onchange="doImport(event,false)">
+      <input type="file" id="imp-replace" accept=".json" style="display:none" onchange="doImport(event,true)">
+    </div>
+    <div class="iobox">
+      <div class="iotitle">📱 QR-Code für Handy</div>
+      <p style="font-size:13px;color:var(--mut);margin-bottom:10px;">Netlify-URL eingeben → QR-Code mit Handy abscannen.</p>
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <input class="fi" id="qr-in" placeholder="https://xyz.netlify.app" style="flex:1;font-size:13px;">
+        <button class="bg" onclick="makeQR()">QR!</button>
+      </div>
+      <div id="qr-out" style="display:none;text-align:center;padding:12px;background:#fff;border-radius:8px;">
+        <div id="qr-cv" style="display:inline-block;"></div>
+        <p style="font-size:11px;color:var(--mut);margin-top:6px;" id="qr-url"></p>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--mut);margin-top:10px;text-align:center;">Daten lokal im Browser gespeichert (localStorage)<br><span style="font-size:10px;opacity:.7;"> · created by DeployerNo1</span></p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+'use strict';
+// ═══════════════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════════════
+const SK   = 'kochbuch-v4';
+const DAYS = ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
+const MEALS = [
+  {key:'fruehstueck', label:'Frühstück', icon:'🌅'},
+  {key:'mittag',      label:'Mittag',    icon:'☀️'},
+  {key:'abend',       label:'Abend',     icon:'🌙'},
+  {key:'snack',       label:'Snack',     icon:'🍪'},
+];
+const KATS = ['Frühstück','Suppe','Salat','Pasta','Hauptgericht','Dessert','Snack','Sonstiges'];
+const EINS = ['g','kg','ml','l','Stück','EL','TL','Prise','Zehen','Scheiben','Becher','Packung'];
+
+const DEMO = [
+  {id:'d1',name:'Spaghetti Carbonara',kategorie:'Pasta',dauer:'25 min',portionen:4,
+   nw:{kcal:520,ew:22,kh:58,ft:21,berechnet:false,vollstaendig:false},
+   zutaten:[{n:'Spaghetti',m:'400',e:'g'},{n:'Speck (Pancetta)',m:'150',e:'g'},{n:'Eier',m:'4',e:'Stück'},{n:'Parmesan',m:'80',e:'g'}],
+   anleitung:'Nudeln kochen, Speck anbraten, Eier mit Parmesan mischen, alles vermengen.'},
+  {id:'d2',name:'Tomatensuppe',kategorie:'Suppe',dauer:'30 min',portionen:4,
+   nw:{kcal:180,ew:4,kh:22,ft:8,berechnet:false,vollstaendig:false},
+   zutaten:[{n:'Tomaten',m:'800',e:'g'},{n:'Zwiebel',m:'1',e:'Stück'},{n:'Knoblauch',m:'2',e:'Zehen'},{n:'Gemüsebrühe',m:'500',e:'ml'},{n:'Sahne',m:'100',e:'ml'}],
+   anleitung:'Zwiebeln anschwitzen, Tomaten dazu, kochen, pürieren, mit Sahne verfeinern.'},
+  {id:'d3',name:'Avocado-Toast',kategorie:'Frühstück',dauer:'10 min',portionen:1,
+   nw:{kcal:310,ew:8,kh:28,ft:19,berechnet:false,vollstaendig:false},
+   zutaten:[{n:'Vollkornbrot',m:'2',e:'Scheiben'},{n:'Avocado',m:'1',e:'Stück'},{n:'Zitronensaft',m:'1',e:'EL'}],
+   anleitung:'Brot toasten, Avocado zerdrücken, würzen, auftragen.'},
+  {id:'d4',name:'Hühnchen-Curry',kategorie:'Hauptgericht',dauer:'40 min',portionen:4,
+   nw:{kcal:480,ew:38,kh:42,ft:14,berechnet:false,vollstaendig:false},
+   zutaten:[{n:'Hähnchenbrustfilet',m:'600',e:'g'},{n:'Kokosmilch',m:'400',e:'ml'},{n:'Currypaste',m:'2',e:'EL'},{n:'Paprika',m:'2',e:'Stück'},{n:'Reis',m:'300',e:'g'}],
+   anleitung:'Hähnchen anbraten, Currypaste mitbraten, Kokosmilch dazu, 20 Min köcheln.'},
+  {id:'d5',name:'Grüner Salat',kategorie:'Salat',dauer:'10 min',portionen:2,
+   nw:{kcal:140,ew:3,kh:8,ft:10,berechnet:false,vollstaendig:false},
+   zutaten:[{n:'Feldsalat',m:'150',e:'g'},{n:'Kirschtomaten',m:'200',e:'g'},{n:'Olivenöl',m:'3',e:'EL'}],
+   anleitung:'Salat waschen, Gemüse schneiden, Vinaigrette anrühren, vermengen.'},
+  {id:'d6',name:'Pfannkuchen',kategorie:'Frühstück',dauer:'20 min',portionen:4,
+   nw:{kcal:290,ew:9,kh:42,ft:9,berechnet:false,vollstaendig:false},
+   zutaten:[{n:'Mehl',m:'200',e:'g'},{n:'Milch',m:'400',e:'ml'},{n:'Eier',m:'2',e:'Stück'},{n:'Butter',m:'20',e:'g'}],
+   anleitung:'Teig rühren, in Butter portionsweise ausbacken.'},
+  {id:'d7',name:'Linsensuppe',kategorie:'Suppe',dauer:'35 min',portionen:4,
+   nw:{kcal:310,ew:18,kh:48,ft:5,berechnet:false,vollstaendig:false},
+   zutaten:[{n:'Rote Linsen',m:'250',e:'g'},{n:'Karotten',m:'2',e:'Stück'},{n:'Gemüsebrühe',m:'1',e:'l'},{n:'Kreuzkümmel',m:'1',e:'TL'}],
+   anleitung:'Linsen und Gemüse in Brühe weich kochen, pürieren, würzen.'},
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// plan structure: plan[dayIndex][mealKey] = recipeId | null
+// ═══════════════════════════════════════════════════════════════
+let st = { rezepte:[], plan:null, checked:{} };
+
+function emptyPlan() {
+  return Array(7).fill(null).map(() => ({fruehstueck:null, mittag:null, abend:null, snack:null}));
+}
+
+// ═══════════════════════════════════════════════════════════════
+// IndexedDB — persistente Speicherung (überlebt Browser-Cache-Löschung)
+// ═══════════════════════════════════════════════════════════════
+const IDB_NAME    = 'rez-app-db';
+const IDB_STORE   = 'store';
+const IDB_VERSION = 1;
+let   idb         = null;
+
+function idbOpen() {
+  return new Promise(resolve => {
+    if (idb) { resolve(idb); return; }
+    const req = indexedDB.open(IDB_NAME, IDB_VERSION);
+    req.onupgradeneeded = e => {
+      if (!e.target.result.objectStoreNames.contains(IDB_STORE))
+        e.target.result.createObjectStore(IDB_STORE);
+    };
+    req.onsuccess = e => { idb = e.target.result; resolve(idb); };
+    req.onerror   = ()  => resolve(null);
+  });
+}
+
+async function idbGet(key) {
+  const db = await idbOpen();
+  if (!db) return null;
+  return new Promise(resolve => {
+    const req = db.transaction(IDB_STORE, 'readonly').objectStore(IDB_STORE).get(key);
+    req.onsuccess = () => resolve(req.result ?? null);
+    req.onerror   = () => resolve(null);
+  });
+}
+
+function idbSet(key, value) {
+  idbOpen().then(db => {
+    if (!db) return;
+    db.transaction(IDB_STORE, 'readwrite').objectStore(IDB_STORE).put(value, key);
+  });
+}
+
+async function loadSt() {
+  // 1. Versuche IndexedDB
+  let data = await idbGet(SK);
+  // 2. Fallback auf localStorage (Migration alter Daten)
+  if (!data) {
+    try {
+      const raw = localStorage.getItem(SK);
+      if (raw) {
+        data = JSON.parse(raw);
+        idbSet(SK, data);        // einmalig in IDB migrieren
+        localStorage.removeItem(SK);
+      }
+    } catch(e) {}
+  }
+  if (data && Array.isArray(data.rezepte)) {
+    st = data;
+    if (!st.plan || !Array.isArray(st.plan) || typeof st.plan[0] !== 'object') st.plan = emptyPlan();
+    if (!st.checked) st.checked = {};
+  } else {
+    st.rezepte = DEMO;
+    st.plan    = emptyPlan();
+    saveSt();
+  }
+}
+
+function saveSt() {
+  // Synchron in localStorage (Fallback) + asynchron in IndexedDB
+  try { localStorage.setItem(SK, JSON.stringify(st)); } catch(e) {}
+  idbSet(SK, st);
+}
+function uid() { return '_' + Math.random().toString(36).slice(2,9); }
+
+// ═══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+let tab = 'rezepte';
+function goTab(t) {
+  tab = t;
+  document.querySelectorAll('.nb').forEach(b => b.classList.toggle('on', b.id === 'nt-' + t));
+  render();
+}
+function render() {
+  const el = document.getElementById('content');
+  if (tab === 'rezepte')       el.innerHTML = rezepteHTML();
+  else if (tab === 'zutaten')  el.innerHTML = zutatenHTML();
+  else if (tab === 'planen')   el.innerHTML = planHTML();
+  else                         el.innerHTML = shopHTML();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════
+let toastT;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('on');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('on'), 2800);
+}
+function nwHTML(nw) {
+  if (!nw) return '';
+  return `<div class="nwb">
+    ${[['🔥','Kalorien',nw.kcal,'kcal'],['🥩','Eiweiß',nw.ew,'g'],['🍞','Kohlenhydrate',nw.kh,'g'],['🫒','Fett',nw.ft,'g']].map(([i,l,v,u])=>
+      `<div class="nwc"><div style="font-size:17px">${i}</div><div class="nwn">${v??'–'}<span>${u}</span></div><div class="nwl">${l}</div></div>`
+    ).join('')}
+  </div>`;
+}
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+let btcEur=null,showBtc=false;
+async function fetchBtcPrice(){
+  try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur');btcEur=(await r.json()).bitcoin.eur;}catch(e){}
+}
+fetchBtcPrice();
+function fmtPreis(p){
+  if(p===undefined||p===null)return null;
+  const n=parseFloat(p);if(isNaN(n))return null;
+  if(!showBtc||!btcEur)return n.toFixed(2).replace('.',',')+' €';
+  const sat=Math.round((n/btcEur)*1e8);
+  return sat>=1000?sat.toLocaleString('de-DE')+' sat':sat+' sat';
+}
+function toggleBtc(){
+  showBtc=!showBtc;
+  if(showBtc&&!btcEur){fetchBtcPrice().then(()=>render());toast('⏳ BTC-Kurs wird geladen…');return;}
+  render();toast(showBtc?'₿ Preise in Satoshi':'€ Preise in Euro');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NÄHRWERT-BERECHNUNG (aus Barcode-Zutaten, mit Portionsskalierung)
+// ═══════════════════════════════════════════════════════════════
+function gramsOf(z) {
+  const mRaw = parseFloat(z.m) || 0;
+  const e = (z.e || 'g').toLowerCase();
+  if      (e === 'g')   return mRaw;
+  else if (e === 'kg')  return mRaw * 1000;
+  else if (e === 'ml')  return mRaw;
+  else if (e === 'l')   return mRaw * 1000;
+  else if (e === 'el')  return mRaw * 15;
+  else if (e === 'tl')  return mRaw * 5;
+  else                  return mRaw * 50; // Stück, Zehen, Scheiben etc. — grobe Schätzung
+}
+
+function recalcNW() {
+  const portionen = Math.max(1, ef.portionen || 1);
+  let total = {kcal:0, ew:0, kh:0, ft:0};
+  let anyData = false, allData = true;
+
+  (ef.zutaten || []).forEach(z => {
+    if (!z.n) return;
+    if (!z.nw100) { allData = false; return; }
+    anyData = true;
+    const g = gramsOf(z);
+    const f = g / 100;
+    total.kcal += (z.nw100.kcal || 0) * f;
+    total.ew   += (z.nw100.ew   || 0) * f;
+    total.kh   += (z.nw100.kh   || 0) * f;
+    total.ft   += (z.nw100.ft   || 0) * f;
+  });
+
+  if (!anyData) {
+    ef.nw = null;
+    return;
+  }
+
+  ef.nw = {
+    kcal: Math.round(total.kcal / portionen),
+    ew:   Math.round(total.ew   / portionen * 10) / 10,
+    kh:   Math.round(total.kh   / portionen * 10) / 10,
+    ft:   Math.round(total.ft   / portionen * 10) / 10,
+    berechnet: true,
+    vollstaendig: allData,
+  };
+}
+
+function nwSourceLabel() {
+  if (!ef.nw) return '<span style="color:var(--mut);font-size:12px;">Noch keine Nährwertdaten — Zutaten per Barcode scannen 🔍</span>';
+  if (ef.nw.vollstaendig)
+    return '<span style="color:var(--green);font-size:12px;">✅ Exakt berechnet aus Barcode-Nährwerten</span>';
+  return '<span style="color:var(--gold);font-size:12px;">⚠️ Teilweise berechnet — nicht alle Zutaten haben Barcode-Daten</span>';
+}
+
+// ── Preisberechnung pro Rezept ────────────────────────────────────────────────
+// Convert preis to cost for given zutat quantity, respecting preisEinheit
+function zutatKosten(z) {
+  if (z.preis100===undefined||z.preis100===null) return null;
+  const pe = z.preisEinheit || '€/100g';
+  const mRaw = parseFloat(z.m) || 0;
+  const e = (z.e||'g').toLowerCase();
+  // Normalize to base unit
+  let g = 0, ml = 0, stueck = mRaw;
+  if (e==='g')  g=mRaw; else if (e==='kg') g=mRaw*1000;
+  else if (e==='ml') ml=mRaw; else if (e==='l') ml=mRaw*1000;
+  else g = gramsOf(z); // fallback
+
+  if (pe==='€/100g')    return (z.preis100/100) * (g||ml);
+  if (pe==='€/kg')      return (z.preis100/1000) * (g||ml);
+  if (pe==='€/L')       return (z.preis100/1000) * (ml||g);
+  if (pe==='€/100ml')   return (z.preis100/100) * (ml||g);
+  if (pe==='€/Stück')   return z.preis100 * (mRaw);
+  if (pe==='€/Packung') return z.preis100 * (mRaw);
+  return (z.preis100/100) * (g||ml); // default
+}
+
+function recalcPreis() {
+  let total = 0, anyData = false, allData = true;
+  (ef.zutaten || []).forEach(z => {
+    if (!z.n) return;
+    if (z.preis100===undefined||z.preis100===null) { allData=false; return; }
+    anyData = true;
+    const k = zutatKosten(z);
+    if (k!==null) total += k;
+  });
+  if (!anyData) { ef.preisGesamt = null; return; }
+  ef.preisGesamt = { gesamt: Math.round(total*100)/100, vollstaendig: allData, proPortion: Math.round((total / Math.max(1,ef.portionen||1))*100)/100 };
+}
+
+function preisSourceLabel() {
+  if (!ef.preisGesamt) return '<span style="color:var(--mut);font-size:12px;">Keine Preisdaten erfasst</span>';
+  const p = ef.preisGesamt;
+  return `<span style="color:${p.vollstaendig?'var(--green)':'var(--gold)'};font-size:12px;">
+    ${p.vollstaendig?'✅':'⚠️'} Gesamt: ${fmtPreis(p.gesamt)} · ${fmtPreis(p.proPortion)}/Portion${p.vollstaendig?'':' (unvollständig)'}
+  </span>`;
+}
+
+// ── Portionsskalierung: alte Mengen × (neuePortionen/altePortionen) ──────────
+function scalePortionen(newPortionen) {
+  const old = ef._origPortionen || ef.portionen || 1;
+  const np = Math.max(1, parseInt(newPortionen) || 1);
+  if (!ef._origZutaten) {
+    // Erststart: aktuelle Mengen als Referenz merken
+    ef._origPortionen = old;
+    ef._origZutaten = JSON.parse(JSON.stringify(ef.zutaten));
+  }
+  const factor = np / ef._origPortionen;
+  ef.zutaten = ef._origZutaten.map(z => {
+    const mNum = parseFloat(z.m);
+    if (isNaN(mNum)) return {...z};
+    const scaled = Math.round(mNum * factor * 100) / 100;
+    return {...z, m: String(scaled)};
+  });
+  ef.portionen = np;
+  recalcNW();
+  recalcPreis();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// REZEPTE TAB
+// ═══════════════════════════════════════════════════════════════
+let rFilter = '';
+function rezepteHTML() {
+  const list = st.rezepte.filter(r =>
+    r.name.toLowerCase().includes(rFilter.toLowerCase()) ||
+    r.kategorie.toLowerCase().includes(rFilter.toLowerCase())
+  );
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+    <div>
+      <h2 class="st">Meine Rezepte</h2>
+      <p class="sub">${st.rezepte.length} Rezepte gespeichert</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input id="recipe-search" class="fi" style="width:180px;" placeholder="🔍 Suchen…" value="${esc(rFilter)}" oninput="rFilter=this.value;render()">
+      <button class="bp" onclick="openForm(null)">+ Neues Rezept</button>
+    </div>
+  </div>
+  <div class="grid">
+    ${list.map(r => `
+      <div class="card" onclick="openDetail('${r.id}')">
+        <div class="kat">${esc(r.kategorie)}</div>
+        <div class="ctitle">${esc(r.name)}</div>
+        <div class="chips">
+          ${r.nw ? `<span class="chip chip-k">🔥 ${r.nw.kcal} kcal</span><span class="chip">🥩 ${r.nw.ew}g</span>` : ''}
+          ${r.preisGesamt ? `<span class="price-tag">${showBtc?'₿':'💶'} ${fmtPreis(r.preisGesamt.proPortion)}/Port.</span>` : ''}
+          ${(r.mahlzeiten||[]).map(k=>{const m=MEALS.find(x=>x.key===k);return m?`<span class="chip" style="background:#EEF5F1;font-size:10px;">${m.icon}${m.label}</span>`:''}).join('')}
+        </div>
+        <div class="cmeta">
+          <span>⏱ ${esc(r.dauer||'–')}</span>
+          <span>👤 ${r.portionen||'–'} Port.</span>
+          <span>🥕 ${(r.zutaten||[]).length} Zutaten</span>
+        </div>
+      </div>`).join('')}
+    ${list.length===0 ? `<div class="empty" style="grid-column:1/-1"><div class="ei">🍳</div><p style="color:var(--mut)">Keine Rezepte gefunden.<br>Füge dein erstes Rezept hinzu!</p></div>` : ''}
+  </div>`;
+}
+
+function openDetail(id) {
+  const r = st.rezepte.find(x => x.id === id);
+  if (!r) return;
+  const d = document.createElement('div');
+  d.className = 'ov';
+  d.id = 'detail-ov';
+  d.onclick = (e) => { if (e.target === d) d.remove(); };
+  d.innerHTML = `
+    <div class="mo" style="max-width:560px;">
+      <div class="mh">
+        <div>
+          <div class="kat">${esc(r.kategorie)}</div>
+          <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--green);font-weight:700;">${esc(r.name)}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+            ${r.dauer ? `<span class="chip">⏱ ${esc(r.dauer)}</span>` : ''}
+            ${r.portionen ? `<span class="chip">👤 ${r.portionen} Port.</span>` : ''}
+            ${r.preisGesamt ? `<span class="price-tag">${showBtc?'₿':'💶'} ${fmtPreis(r.preisGesamt.gesamt)} ges. · ${fmtPreis(r.preisGesamt.proPortion)}/Port.</span>` : ''}
+            ${(r.mahlzeiten||[]).map(k=>{const m=MEALS.find(x=>x.key===k);return m?`<span class="chip" style="background:#EEF5F1;">${m.icon} ${m.label}</span>`:''}).join('')}
+          </div>
+        </div>
+        <button class="mc" onclick="document.getElementById('detail-ov').remove()">✕</button>
+      </div>
+      ${nwHTML(r.nw)}
+      <div style="font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Zutaten</div>
+      <ul style="list-style:none;margin-bottom:16px;">
+        ${(r.zutaten||[]).map(z => `
+          <li style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F0EBE1;font-size:14px;">
+            <span>${esc(z.n)}</span>
+            <span style="display:flex;gap:8px;align-items:center;">
+              ${z.preis100 ? `<span class="price-tag">${fmtPreis(z.preis100)}/100${ (z.e==='ml'||z.e==='l')?'ml':'g'}</span>` : ''}
+              <span style="color:var(--mut);font-weight:600;">${esc(z.m)} ${esc(z.e)}</span>
+            </span>
+          </li>`).join('')}
+      </ul>
+      ${r.anleitung ? `
+        <div style="font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Zubereitung</div>
+        <p style="font-size:14px;line-height:1.7;color:#3D5C50;margin-bottom:20px;">${esc(r.anleitung)}</p>` : ''}
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button class="bd" onclick="deleteR('${r.id}')">🗑 Löschen</button>
+        <button class="bs" onclick="document.getElementById('detail-ov').remove();openForm('${r.id}')">✏️ Bearbeiten</button>
+      </div>
+    </div>`;
+  document.body.appendChild(d);
+}
+
+function deleteR(id) {
+  if (!confirm('Rezept wirklich löschen?')) return;
+  st.rezepte = st.rezepte.filter(r => r.id !== id);
+  st.plan.forEach(day => { MEALS.forEach(m => { if (day[m.key] === id) day[m.key] = null; }); });
+  saveSt();
+  const d = document.getElementById('detail-ov');
+  if (d) d.remove();
+  render();
+  toast('Rezept gelöscht');
+}
+
+// ── Form Modal ───────────────────────────────────────────────────────────────
+let ef = {};
+
+function openForm(id) {
+  const r = id ? st.rezepte.find(x => x.id === id) : null;
+  ef = r ? JSON.parse(JSON.stringify(r)) : {
+    name:'', kategorie:'Hauptgericht', dauer:'', portionen:4,
+    anleitung:'', zutaten:[{n:'',m:'',e:'g'}], nw:null,  preisGesamt:null
+  };
+  ef._origPortionen = ef.portionen;
+  ef._origZutaten = JSON.parse(JSON.stringify(ef.zutaten));
+  // Auto-fill prices from global price DB
+  (ef.zutaten||[]).forEach(z => {
+    if ((z.preis100 === undefined || z.preis100 === null) && z.n) {
+      const entry = getPreisFromDB(z.n);
+      if (entry) { z.preis100 = entry.preis100; z.preisDatum = entry.datum; }
+    }
+  });
+  recalcNW();
+  recalcPreis();
+  renderForm();
+}
+
+function renderForm() {
+  const old = document.getElementById('form-ov');
+  if (old) old.remove();
+
+  const zHtml = buildZutatRows();
+
+  const nw = ef.nw || {};
+  const d = document.createElement('div');
+  d.className = 'ov';
+  d.id = 'form-ov';
+  d.onclick = (e) => { if (e.target === d) d.remove(); };
+  d.innerHTML = `
+    <div class="mo" style="max-width:600px;">
+      <div class="mh">
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--green);font-weight:700;">${ef.id ? 'Rezept bearbeiten' : 'Neues Rezept'}</div>
+        <button type="button" class="mc" onclick="document.getElementById('form-ov').remove()">✕</button>
+      </div>
+
+      <div class="g2">
+        <div class="full">
+          <label class="fl">Rezeptname *</label>
+          <input class="fi" id="f-name" value="${esc(ef.name)}" placeholder="z.B. Spaghetti Bolognese" oninput="ef.name=this.value">
+        </div>
+        <div>
+          <label class="fl">Kategorie</label>
+          <select id="recipe-category" class="fsel" onchange="ef.kategorie=this.value">
+            ${KATS.map(k => `<option${ef.kategorie===k?' selected':''}>${k}</option>`).join('')}
+          </select>
+        </div>
+        <div class="full">
+          <label class="fl">Geeignet für</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+            ${MEALS.map(m => {
+              const active=(ef.mahlzeiten||[]).includes(m.key);
+              return `<label style="display:flex;align-items:center;gap:5px;background:${active?'var(--green)':'var(--gl)'};color:${active?'#fff':'var(--tx)'};border-radius:20px;padding:7px 14px;cursor:pointer;font-size:13px;font-weight:600;border:2px solid ${active?'var(--green)':'var(--bd)'};"><input type="checkbox" style="display:none;" ${active?'checked':''} onchange="toggleMahlzeit('${m.key}');renderForm()">${m.icon} ${m.label}</label>`;
+            }).join('')}
+          </div>
+          <p style="font-size:11px;color:var(--mut);margin-top:5px;">Nur Rezepte mit aktivem Button sind im Wochenplan für den jeweiligen Slot auswählbar</p>
+        </div>
+        <div>
+          <label class="fl">Portionen <span style="font-weight:400;text-transform:none;">(skaliert Mengen automatisch)</span></label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button type="button" class="bs sm" onclick="scalePortionen((ef.portionen||4)-1);renderForm()" style="padding:8px 12px !important;">−</button>
+            <input id="recipe-portions" class="fi" type="number" min="1" value="${ef.portionen||4}" style="text-align:center;" oninput="scalePortionen(this.value)">
+            <button type="button" class="bs sm" onclick="scalePortionen((ef.portionen||4)+1);renderForm()" style="padding:8px 12px !important;">+</button>
+          </div>
+        </div>
+        <div class="full">
+          <label class="fl">Zubereitungszeit</label>
+          <input id="recipe-duration" class="fi" value="${esc(ef.dauer||'')}" placeholder="z.B. 30 min" oninput="ef.dauer=this.value">
+        </div>
+      </div>
+
+      <div class="fg">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <label class="fl" style="margin:0;">Zutaten</label>
+          <button type="button" class="bs sm" onclick="addZ()">+ Zutat</button>
+        </div>
+        <div id="z-list">${zHtml}</div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Zubereitung</label>
+        <textarea id="recipe-instructions" class="fta" oninput="ef.anleitung=this.value">${esc(ef.anleitung||'')}</textarea>
+      </div>
+
+      <div style="background:var(--gl);border-radius:10px;padding:14px;margin-bottom:14px;">
+        <label class="fl" style="margin-bottom:8px;">Nährwerte <span style="font-weight:400;text-transform:none;">(pro Portion, aus Barcode-Scan)</span></label>
+        <div id="nw-src" style="margin-bottom:10px;">${nwSourceLabel()}</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+          ${[['kcal','🔥 kcal'],['ew','🥩 Eiweiß g'],['kh','🍞 KH g'],['ft','🫒 Fett g']].map(([k,l]) => `
+            <div>
+              <label class="fl" style="font-size:10px;">${l}</label>
+              <input class="fi" type="number" min="0" inputmode="decimal" id="nw-${k}" style="padding:8px;" value="${nw[k]??''}" placeholder="–"
+                oninput="if(!ef.nw)ef.nw={};ef.nw['${k}']=Number(this.value)">
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div style="background:#FFF3E8;border-radius:10px;padding:14px;margin-bottom:18px;">
+        <label class="fl" style="margin-bottom:8px;">Preis <span style="font-weight:400;text-transform:none;">(aus Preis/100g je Zutat)</span></label>
+        <div id="preis-src">${preisSourceLabel()}</div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button type="button" class="bs" onclick="document.getElementById('form-ov').remove()">Abbrechen</button>
+        <button type="button" class="bp" onclick="saveForm()">💾 Speichern</button>
+      </div>
+    </div>`;
+  document.body.appendChild(d);
+}
+
+
+function addZ() {
+  const old = document.getElementById('addz-ov');
+  if (old) old.remove();
+  const db = loadPreisDB();
+  const names = Object.values(db).map(z => z.name).sort((a,b) => a.localeCompare(b));
+  const d = document.createElement('div');
+  d.className = 'ov';
+  d.id = 'addz-ov';
+  d.style.zIndex = '6500';
+  d.onclick = e => { if (e.target === d) d.remove(); };
+  d.innerHTML = `
+    <div class="mo" style="max-width:420px;">
+      <div class="mh">
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--green);font-weight:700;">🥕 Zutat hinzufügen</div>
+        <button type="button" class="mc" onclick="document.getElementById('addz-ov').remove()">✕</button>
+      </div>
+      <div class="fg">
+        <label class="fl">Zutat *</label>
+        <div style="display:flex;gap:8px;">
+          <input class="fi" id="az-name" list="az-list" placeholder="z.B. Vollmilch" style="flex:1;" autocomplete="off"
+            onkeydown="if(event.key==='Enter')confirmAddZ()">
+          <button type="button" class="bi" onclick="addZScan()" title="Barcode scannen">🔍</button>
+        </div>
+        <datalist id="az-list">${names.map(n => `<option value="${esc(n)}">`).join('')}</datalist>
+        <p style="font-size:11px;color:var(--mut);margin-top:4px;">Bekannte Zutaten aus der Datenbank werden automatisch mit Preis & Nährwerten übernommen.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+        <div>
+          <label class="fl">Menge</label>
+          <input class="fi" id="az-menge" inputmode="decimal" placeholder="z.B. 250" onkeydown="if(event.key==='Enter')confirmAddZ()">
+        </div>
+        <div>
+          <label class="fl">Einheit</label>
+          <select class="fsel" id="az-einheit">${EINS.map(e => `<option>${e}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button type="button" class="bs" onclick="document.getElementById('addz-ov').remove()">Abbrechen</button>
+        <button type="button" class="bp" onclick="confirmAddZ()">✓ Hinzufügen</button>
+      </div>
+    </div>`;
+  document.body.appendChild(d);
+  setTimeout(() => document.getElementById('az-name')?.focus(), 60);
+}
+function confirmAddZ() {
+  const name = (document.getElementById('az-name').value || '').trim();
+  if (!name) { alert('Bitte einen Zutatennamen eingeben.'); return; }
+  const menge = (document.getElementById('az-menge').value || '').trim();
+  const einheit = document.getElementById('az-einheit').value;
+  const z = { n: name, m: menge, e: einheit };
+  const entry = getPreisFromDB(name);
+  if (entry) {
+    if (entry.preis100 !== undefined) { z.preis100 = entry.preis100; z.preisDatum = entry.datum; }
+    if (entry.preisEinheit) z.preisEinheit = entry.preisEinheit;
+    if (entry.nw100) z.nw100 = entry.nw100;
+  }
+  ef.zutaten.push(z);
+  ef._origZutaten.push(JSON.parse(JSON.stringify(z)));
+  document.getElementById('addz-ov').remove();
+  recalcNW(); recalcPreis(); renderForm();
+  highlightNewZ(ef.zutaten.length - 1);
+  toast(`✅ ${name} hinzugefügt`);
+}
+function addZScan() {
+  // Neue Zeile anlegen und direkt Barcode dafür scannen
+  ef.zutaten.push({n:'',m:'',e:'g'});
+  ef._origZutaten.push({n:'',m:'',e:'g'});
+  const i = ef.zutaten.length - 1;
+  const ov = document.getElementById('addz-ov');
+  if (ov) ov.remove();
+  renderForm();
+  highlightNewZ(i);
+  scanFor(i);
+}
+function highlightNewZ(i) {
+  setTimeout(() => {
+    const list = document.getElementById('z-list');
+    if (!list) return;
+    const row = list.children[i];
+    if (!row) return;
+    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    row.style.transition = 'background .5s';
+    row.style.background = '#FFF3D6';
+    setTimeout(() => { row.style.background = ''; }, 1800);
+  }, 80);
+}
+function rmZ(i) { ef.zutaten.splice(i,1); ef._origZutaten.splice(i,1); recalcNW(); recalcPreis(); renderForm(); }
+
+function toggleMahlzeit(key){
+  if(!ef.mahlzeiten)ef.mahlzeiten=[];
+  const i=ef.mahlzeiten.indexOf(key);
+  if(i===-1)ef.mahlzeiten.push(key);else ef.mahlzeiten.splice(i,1);
+}
+// ── Preis-Datenbank: globale Preise zwischen Rezepten teilen ─────────────────
+const PRICE_DB_KEY = 'rezapp-preise-v1';
+
+function loadPreisDB() {
+  try { return JSON.parse(localStorage.getItem(PRICE_DB_KEY)||'{}'); } catch { return {}; }
+}
+function savePreisToDB(name, preis100, opts={}) {
+  if (!name||!name.trim()) return;
+  const db = loadPreisDB();
+  const key = name.toLowerCase().trim();
+  const existing = db[key] || {};
+  db[key] = {
+    ...existing,
+    name: name.trim(),
+    datum: new Date().toISOString().slice(0,10),
+    ...(preis100!==undefined && preis100!==null ? {preis100} : {}),
+    ...(opts.preisEinheit ? {preisEinheit: opts.preisEinheit} : {}),
+    ...(opts.nw100 ? {nw100: opts.nw100} : {}),
+  };
+  try { localStorage.setItem(PRICE_DB_KEY, JSON.stringify(db)); } catch {}
+}
+function deleteFromPreisDB(name) {
+  const db = loadPreisDB();
+  delete db[name.toLowerCase().trim()];
+  try { localStorage.setItem(PRICE_DB_KEY, JSON.stringify(db)); } catch {}
+}
+function getPreisFromDB(name) {
+  if (!name||!name.trim()) return null;
+  return loadPreisDB()[name.toLowerCase().trim()] || null;
+}
+function syncPriceFromDB(idx) {
+  const z = ef.zutaten[idx];
+  if (!z||!z.n||z.preis100!==undefined) return;
+  const entry = getPreisFromDB(z.n);
+  if (entry) {
+    z.preis100 = entry.preis100; z.preisDatum = entry.datum;
+    if (entry.preisEinheit) z.preisEinheit = entry.preisEinheit;
+    if (entry.nw100 && !z.nw100) z.nw100 = entry.nw100;
+    recalcPreis(); updatePreisLabel(); refreshZutatRows();
+  }
+}
+
+// ── Lightweight update: nur Labels neu rendern, Tastatur bleibt offen ─────────
+function updateNWPreisLabels() {
+  const n1 = document.getElementById('nw-src');
+  if (n1) n1.innerHTML = nwSourceLabel();
+  const n2 = document.getElementById('preis-src');
+  if (n2) n2.innerHTML = preisSourceLabel();
+  const nw = ef.nw||{};
+  ['kcal','ew','kh','ft'].forEach(k => {
+    const el = document.getElementById('nw-'+k);
+    if (el && document.activeElement!==el) el.value = nw[k]??'';
+  });
+}
+function updatePreisLabel() {
+  const el = document.getElementById('preis-src');
+  if (el) el.innerHTML = preisSourceLabel();
+}
+
+// ── Zutat-Zeilen neu aufbauen (für Einheit-Wechsel) ohne Tastatur zu schließen
+function refreshZutatRows() {
+  const list = document.getElementById('z-list');
+  if (list) { list.innerHTML = buildZutatRows(); updateNWPreisLabels(); }
+}
+
+function buildZutatRows() {
+  return (ef.zutaten||[]).map((z,i) => `
+    <div style="border:1px solid var(--bd);border-radius:8px;padding:8px;margin-bottom:6px;background:${z.nw100?'rgba(45,74,62,0.03)':'transparent'}">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr auto auto;gap:6px;margin-bottom:${(z.nw100||z.preis100!==undefined)?'6px':'0'};">
+        <div>
+          <input class="fi" placeholder="Zutat" value="${esc(z.n)}"
+            oninput="ef.zutaten[${i}].n=this.value;syncPriceFromDB(${i})">
+        </div>
+        <input class="fi" placeholder="Menge" value="${esc(z.m)}" inputmode="decimal"
+          oninput="ef.zutaten[${i}].m=this.value;recalcNW();recalcPreis();updateNWPreisLabels()">
+        <select class="fsel" onchange="ef.zutaten[${i}].e=this.value;recalcNW();recalcPreis();refreshZutatRows()">
+          ${EINS.map(e => `<option${z.e===e?' selected':''}>${e}</option>`).join('')}
+        </select>
+        <button type="button" class="bi sm" onclick="scanFor(${i})" title="Barcode">🔍</button>
+        <button type="button" class="bd sm" onclick="rmZ(${i})">✕</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+        ${z.nw100 ? `<span style="font-size:10px;background:var(--green);color:#fff;border-radius:4px;padding:2px 6px;">✅ ${z.nw100.kcal} kcal/100g</span>` : ''}
+        <span style="font-size:11px;color:var(--mut);">💶 Preis:</span>
+        <input class="fi" type="number" min="0" step="0.01" inputmode="decimal"
+          style="width:80px;padding:5px 8px;font-size:12px;" placeholder="0,00"
+          value="${z.preis100??''}"
+          oninput="ef.zutaten[${i}].preis100=this.value===''?undefined:Number(this.value);if(this.value!=='')savePreisToDB(ef.zutaten[${i}].n,Number(this.value),{preisEinheit:ef.zutaten[${i}].preisEinheit});recalcPreis();updatePreisLabel()">
+        <select class="fsel" style="width:auto;padding:5px 8px;font-size:11px;"
+          onchange="ef.zutaten[${i}].preisEinheit=this.value;savePreisToDB(ef.zutaten[${i}].n,ef.zutaten[${i}].preis100,{preisEinheit:this.value});recalcPreis();updatePreisLabel()">
+          ${['€/100g','€/kg','€/100ml','€/L','€/Stück','€/Packung'].map(u=>`<option${(z.preisEinheit||'€/100g')===u?' selected':''}>${u}</option>`).join('')}
+        </select>
+        ${z.preisDatum ? `<span style="font-size:10px;color:var(--mut);">Stand: ${esc(z.preisDatum)}</span>` : ''}
+        ${(!z.preis100&&getPreisFromDB(z.n)) ? `<span style="font-size:10px;color:var(--gold);cursor:pointer;" onclick="ef.zutaten[${i}].preis100=getPreisFromDB(ef.zutaten[${i}].n).preis100;ef.zutaten[${i}].preisEinheit=getPreisFromDB(ef.zutaten[${i}].n).preisEinheit||'€/100g';refreshZutatRows()">💡 ${fmtPreis(getPreisFromDB(z.n).preis100)} ${getPreisFromDB(z.n).preisEinheit||'€/100g'} übernehmen</span>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function saveForm() {
+  if (!ef.name.trim()) { alert('Bitte einen Rezeptnamen eingeben.'); return; }
+  recalcNW();
+  recalcPreis();
+  (ef.zutaten||[]).forEach(z => {
+    if (z.n && z.preis100 !== undefined) savePreisToDB(z.n, z.preis100);
+  });
+  delete ef._origPortionen;
+  delete ef._origZutaten;
+  if (ef.id) {
+    st.rezepte = st.rezepte.map(r => r.id === ef.id ? ef : r);
+  } else {
+    ef.id = uid();
+    st.rezepte.push(ef);
+  }
+  saveSt();
+  const fo = document.getElementById('form-ov');
+  if (fo) fo.remove();
+  render();
+  toast('Rezept gespeichert ✓');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BARCODE SCANNER
+// ═══════════════════════════════════════════════════════════════
+let scanTarget = null;
+let scanStream  = null;
+let scanActive  = false;
+
+function scanFor(target) {
+  scanTarget = target;
+  const lbl = target === null ? '🔍 Produkt scannen' : `🔍 Zutat ${target+1} scannen`;
+  document.getElementById('scan-label').textContent = lbl;
+  document.getElementById('mbc').value = '';
+  setScanMsg('Kamera startet…', '');
+  document.body.appendChild(document.getElementById('scan-ov'));
+  document.getElementById('scan-ov').classList.remove('hidden');
+  startCam();
+}
+function closeScanner() {
+  stopCam();
+  document.getElementById('scan-ov').classList.add('hidden');
+}
+async function startCam() {
+  stopCam();
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } }
+    });
+    scanStream = stream;
+    const vid = document.getElementById('scan-video');
+    vid.srcObject = stream;
+    vid.play();
+    scanActive = true;
+    setScanMsg('Barcode in den Rahmen halten…', '');
+    scanLoop();
+  } catch(e) {
+    setScanMsg('❌ Kamera nicht verfügbar — bitte manuell eingeben.', 'err');
+  }
+}
+function stopCam() {
+  scanActive = false;
+  if (scanStream) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; }
+  const vid = document.getElementById('scan-video');
+  if (vid) vid.srcObject = null;
+}
+let bdet = null;
+async function scanLoop() {
+  if (!scanActive) return;
+  const vid = document.getElementById('scan-video');
+  if (!vid || vid.readyState < 2) { setTimeout(scanLoop, 150); return; }
+  try {
+    if (!bdet && 'BarcodeDetector' in window) {
+      bdet = new BarcodeDetector({ formats: ['ean_13','ean_8','upc_a','upc_e','code_128'] });
+    }
+    if (bdet) {
+      const codes = await bdet.detect(vid);
+      if (codes.length) {
+        const code = codes[0].rawValue;
+        stopCam();
+        setScanMsg(`✅ Erkannt: ${code}`, 'ok');
+        handleBarcode(code);
+        return;
+      }
+    }
+  } catch(e) { bdet = null; }
+  if (scanActive) setTimeout(scanLoop, 300);
+}
+function setScanMsg(msg, cls) {
+  const el = document.getElementById('scan-msg');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = cls === 'err' ? 'var(--terra)' : cls === 'ok' ? 'var(--green)' : 'var(--mut)';
+}
+function submitManual() {
+  const code = (document.getElementById('mbc').value || '').trim().replace(/\s/g,'');
+  if (!code) return;
+  if (!/^\d{6,14}$/.test(code)) { setScanMsg('❌ Ungültig — nur Ziffern, 6–14 Stellen', 'err'); return; }
+  stopCam();
+  setScanMsg(`Suche ${code}…`, '');
+  handleBarcode(code);
+}
+async function handleBarcode(code) {
+  try {
+    const res = await fetch(
+      `https://world.openfoodfacts.org/api/v2/product/${code}.json?fields=product_name,nutriments`,
+      { headers: { 'User-Agent': 'MeinKochbuch/4.0' } }
+    );
+    const data = await res.json();
+    if (data.status !== 1) {
+      setScanMsg('❌ Produkt nicht in Open Food Facts gefunden — Name/Preis manuell ergänzen.', 'err');
+      closeScanner();
+      applyScan({ name:'', nw100:null, gtin: code });
+      return;
+    }
+    const p = data.product;
+    const nm = p.nutriments || {};
+    const nw100 = {
+      kcal: Math.round(nm['energy-kcal_100g'] || 0),
+      ew:   Math.round((nm['proteins_100g'] || 0) * 10) / 10,
+      kh:   Math.round((nm['carbohydrates_100g'] || 0) * 10) / 10,
+      ft:   Math.round((nm['fat_100g'] || 0) * 10) / 10,
+    };
+    const result = {
+      name:  p.product_name || '',
+      nw:    nw100,
+      nw100: nw100,
+      gtin:  code,
+    };
+    closeScanner();
+    applyScan(result);
+    toast(`✅ ${result.name || 'Produkt'} geladen`);
+  } catch(e) {
+    setScanMsg('❌ Netzwerkfehler. Barcode manuell eingeben.', 'err');
+  }
+}
+function applyScanRezept(result) {
+  if (scanTarget === null) {
+    if (result.name) ef.name = result.name;
+    if (result.nw)   ef.nw   = result.nw;
+  } else {
+    const i = scanTarget;
+    if (!ef.zutaten[i]) ef.zutaten[i] = {n:'',m:'',e:'g'};
+    if (result.name)  ef.zutaten[i].n     = result.name;
+    if (result.nw100) ef.zutaten[i].nw100 = result.nw100;
+    if (result.gtin)  ef.zutaten[i].gtin  = result.gtin;
+    if (ef._origZutaten[i]) ef._origZutaten[i] = JSON.parse(JSON.stringify(ef.zutaten[i]));
+    // Auto-save scanned nw100 to global ingredient DB
+    if (result.name && result.nw100) savePreisToDB(result.name, undefined, {nw100: result.nw100});
+    recalcNW();
+    recalcPreis();
+  }
+  renderForm();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// WOCHENPLAN TAB (Frühstück / Mittag / Abend / Snack)
+// ═══════════════════════════════════════════════════════════════
+function planHTML() {
+  const sumNW = {kcal:0,ew:0,kh:0,ft:0};
+  let hasNW = false;
+  st.plan.forEach(day => {
+    MEALS.forEach(m => {
+      const id = day[m.key];
+      const r = id ? st.rezepte.find(x=>x.id===id) : null;
+      if (r && r.nw) { hasNW = true; sumNW.kcal+=r.nw.kcal||0; sumNW.ew+=r.nw.ew||0; sumNW.kh+=r.nw.kh||0; sumNW.ft+=r.nw.ft||0; }
+    });
+  });
+
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:18px;">
+    <div>
+      <h2 class="st">Wochenplan</h2>
+      <p class="sub">Frühstück · Mittag · Abend · Snack — tippe zum Bearbeiten</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="bs" onclick="clearPlan()">🗑 Leeren</button>
+      <button class="bg" onclick="randPlan()">🎲 Zufällig</button>
+    </div>
+  </div>
+  ${hasNW ? `<div style="margin-bottom:18px;"><p style="font-size:12px;color:var(--mut);margin-bottom:8px;font-weight:600;">🧮 WOCHENSUMME NÄHRWERTE</p>${nwHTML(sumNW)}</div>` : ''}
+  <div class="wscroll">
+    <div class="wgrid">
+      ${DAYS.map((day,di) => `
+        <div class="dc">
+          <div class="dl">${day}</div>
+          ${MEALS.map(m => {
+            const id = st.plan[di][m.key];
+            const r = id ? st.rezepte.find(x=>x.id===id) : null;
+            return `<div>
+              <div class="meal-lbl">${m.icon} ${m.label}</div>
+              ${r ? `
+                <div class="mc2">
+                  <div style="font-weight:600;font-size:11px;color:var(--green);line-height:1.3;margin-bottom:3px;">${esc(r.name)}</div>
+                  ${r.nw ? `<div style="font-size:10px;color:var(--mut);">🔥${r.nw.kcal}</div>` : ''}
+                  <div style="display:flex;gap:4px;margin-top:4px;">
+                    <button onclick="openPicker(${di},'${m.key}')" style="font-size:9px;background:var(--green);color:#fff;border:none;border-radius:4px;padding:2px 5px;cursor:pointer;">↩</button>
+                    <button onclick="rmMeal(${di},'${m.key}')" style="font-size:9px;background:transparent;color:var(--terra);border:1px solid var(--terra);border-radius:4px;padding:2px 5px;cursor:pointer;">✕</button>
+                  </div>
+                </div>` : `
+                <button class="de" onclick="openPicker(${di},'${m.key}')">+ wählen</button>`}
+            </div>`;
+          }).join('')}
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function clearPlan() { st.plan = emptyPlan(); saveSt(); render(); }
+
+function randPlan() {
+  if (st.rezepte.length === 0) { alert('Du hast noch keine Rezepte angelegt.'); return; }
+  // Pro Mahlzeit nur Rezepte mit aktivem "Geeignet für"-Button
+  const byMeal = {};
+  let anyPool = false;
+  MEALS.forEach(m => {
+    byMeal[m.key] = [...st.rezepte].filter(r => (r.mahlzeiten||[]).includes(m.key)).sort(() => Math.random()-.5);
+    if (byMeal[m.key].length) anyPool = true;
+  });
+  if (!anyPool) { alert('Kein Rezept hat eine Mahlzeit zugeordnet.\nAktiviere in deinen Rezepten unter „Geeignet für" die passenden Buttons (🍳 Frühstück, ☀️ Mittag, …).'); return; }
+  let uebersprungen = false;
+  st.plan = Array(7).fill(null).map((_, di) => {
+    const day = {};
+    MEALS.forEach(m => {
+      const pool = byMeal[m.key];
+      if (pool.length) { day[m.key] = pool[di % pool.length].id; }
+      else { day[m.key] = null; uebersprungen = true; }
+    });
+    return day;
+  });
+  saveSt(); render();
+  toast(uebersprungen ? '🎲 Plan befüllt — Slots ohne passende Rezepte blieben leer' : '🎲 Wochenplan befüllt — Frühstück bis Snack!');
+}
+
+function rmMeal(di, mealKey) { st.plan[di][mealKey] = null; saveSt(); render(); }
+
+let picDay = null, picMeal = null, picFilter = '';
+function openPicker(di, mealKey) {
+  picDay = di; picMeal = mealKey; picFilter = '';
+  renderPicker();
+}
+function renderPicker() {
+  const old = document.getElementById('pick-ov');
+  if (old) old.remove();
+  const mealInfo = MEALS.find(m => m.key === picMeal);
+  const list = st.rezepte.filter(r =>
+    (r.mahlzeiten||[]).includes(picMeal) &&
+    (r.name.toLowerCase().includes(picFilter.toLowerCase()) ||
+     r.kategorie.toLowerCase().includes(picFilter.toLowerCase()))
+  );
+  const d = document.createElement('div');
+  d.className = 'ov';
+  d.id = 'pick-ov';
+  d.onclick = (e) => { if(e.target===d) d.remove(); };
+  d.innerHTML = `
+    <div class="mo" style="max-width:440px;">
+      <div class="mh">
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--green);font-weight:700;">${mealInfo.icon} ${mealInfo.label} — ${DAYS[picDay]}</div>
+        <button class="mc" onclick="document.getElementById('pick-ov').remove()">✕</button>
+      </div>
+      <input id="picker-search" class="fi" style="margin-bottom:12px;" placeholder="🔍 Suchen…" value="${esc(picFilter)}" oninput="picFilter=this.value;renderPicker()" autofocus>
+      <div style="max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;">
+        ${list.map(r => `
+          <div onclick="pickMeal('${r.id}')" style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:#F7F3EC;border-radius:8px;cursor:pointer;border:1px solid transparent;"
+            onmouseover="this.style.borderColor='var(--terra)'" onmouseout="this.style.borderColor='transparent'">
+            <div>
+              <div style="font-size:10px;color:var(--terra);font-weight:700;text-transform:uppercase;">${esc(r.kategorie)}</div>
+              <div style="font-weight:600;color:var(--green);font-size:14px;">${esc(r.name)}</div>
+            </div>
+            <div style="text-align:right;font-size:12px;color:var(--mut);">
+              ${r.nw ? `<div style="color:var(--terra);font-weight:700;">🔥 ${r.nw.kcal} kcal</div>` : ''}
+              <div>${esc(r.dauer||'')}</div>
+            </div>
+          </div>`).join('')}
+        ${list.length===0 ? `<p style="text-align:center;color:var(--mut);padding:20px;font-size:13px;">Kein Rezept für ${mealInfo.icon} ${mealInfo.label} vorhanden.<br><br>Aktiviere im Rezept unter „Geeignet für" den Button <b>${mealInfo.icon} ${mealInfo.label}</b>, damit es hier auswählbar ist.</p>` : ''}
+      </div>
+    </div>`;
+  document.body.appendChild(d);
+}
+function pickMeal(id) {
+  st.plan[picDay][picMeal] = id;
+  saveSt();
+  const p = document.getElementById('pick-ov');
+  if (p) p.remove();
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// EINKAUF TAB
+// ═══════════════════════════════════════════════════════════════
+function shopHTML() {
+  const planned = [];
+  st.plan.forEach((day, di) => {
+    MEALS.forEach(m => {
+      const id = day[m.key];
+      const r = id ? st.rezepte.find(x=>x.id===id) : null;
+      if (r) planned.push({day:DAYS[di], meal:m.label, mealIcon:m.icon, r});
+    });
+  });
+
+  if (!planned.length) return `
+    <div class="empty">
+      <div class="ei">🛒</div>
+      <h2 class="st">Noch kein Wochenplan</h2>
+      <p style="color:var(--mut);margin-bottom:16px;">Plane zuerst deine Woche.</p>
+      <button class="bp" onclick="goTab('planen')">→ Zum Wochenplan</button>
+    </div>`;
+
+  const byName = {};
+  let totalPreis = 0, anyPreis = false;
+  planned.forEach(({r}) => {
+    (r.zutaten||[]).forEach(z => {
+      if (!z || !z.n || typeof z.n !== 'string') return;
+      const key = z.n.toLowerCase().trim();
+      if (!key) return;
+      if (!byName[key]) byName[key] = {name:z.n, items:[], preis100:z.preis100};
+      byName[key].items.push({m:z.m, e:z.e});
+      if (z.preis100 !== undefined) {
+        anyPreis = true;
+        totalPreis += (z.preis100/100) * gramsOf(z);
+      }
+    });
+  });
+  const merged = Object.values(byName).sort((a,b) => a.name.localeCompare(b.name));
+  if (!st.checked) st.checked = {};
+  const unchecked = merged.filter(x => !st.checked[x.name.toLowerCase().trim()]);
+  const done      = merged.filter(x =>  st.checked[x.name.toLowerCase().trim()]);
+
+  const row = (item, isDone) => {
+    const key = item.name.toLowerCase().trim();
+    const unitSums={};
+    item.items.forEach(x=>{const u=(x.e||'g').trim();unitSums[u]=(unitSums[u]||0)+(parseFloat(x.m)||0);});
+    const qty=Object.entries(unitSums).map(([u,v])=>(Math.round(v*100)/100)+' '+u).join(' + ');
+    return `<div class="si${isDone?' dn':''}">
+      <input type="checkbox" ${isDone?'checked':''} onchange="togItem('${key.replace(/'/g,"\\'")}')">
+      <span style="flex:1;font-weight:600;${isDone?'text-decoration:line-through':''}">${esc(item.name)}</span>
+      ${item.preis100 ? `<span class="price-tag">${showBtc?'₿':'💶'} ${fmtPreis(item.preis100)}/100g</span>` : ''}
+      <span style="font-size:13px;color:var(--mut);${isDone?'text-decoration:line-through':''}">${esc(qty)}</span>
+    </div>`;
+  };
+
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+    <div>
+      <h2 class="st">Einkaufsliste</h2>
+      <p class="sub">${merged.length} Zutaten · ${unchecked.length} noch zu kaufen${anyPreis ? ` · ${showBtc?'₿':'💶'} ≈ ${fmtPreis(totalPreis)} gesamt` : ''}</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="bs" onclick="resetChecked()">↩ Rücksetzen</button>
+      <button class="bp" style="background:var(--green);" onclick="checkAll()">✅ Alle abhaken</button>
+    </div>
+  </div>
+  <div class="ptags">${planned.map(({day,meal,mealIcon,r}) => `<div class="ptag">${day} ${mealIcon}: ${esc(r.name)}</div>`).join('')}</div>
+  <div class="sc">
+    ${unchecked.length ? `<div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">Noch zu kaufen (${unchecked.length})</div>${unchecked.map(x=>row(x,false)).join('')}` : ''}
+    ${done.length ? `<div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;margin-top:${unchecked.length?'18px':'0'};margin-bottom:8px;">Erledigt (${done.length})</div>${done.map(x=>row(x,true)).join('')}` : ''}
+  </div>`;
+}
+function togItem(key) { st.checked[key] = !st.checked[key]; saveSt(); render(); }
+function resetChecked() { st.checked = {}; saveSt(); render(); }
+function checkAll() {
+  st.plan.forEach(day => {
+    MEALS.forEach(m => {
+      const id = day[m.key];
+      const r = id ? st.rezepte.find(x=>x.id===id) : null;
+      if (r) (r.zutaten||[]).forEach(z => { st.checked[z.n.toLowerCase().trim()] = true; });
+    });
+  });
+  saveSt(); render();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BACKUP / IMPORT / EXPORT
+// ═══════════════════════════════════════════════════════════════
+function showBackup() { document.body.appendChild(document.getElementById('bak-ov')); document.getElementById('bak-ov').classList.remove('hidden'); }
+function closeBackup() { document.getElementById('bak-ov').classList.add('hidden'); }
+function dl(blob, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+const dateStr = () => new Date().toISOString().slice(0,10);
+function exportAll() {
+  dl(new Blob([JSON.stringify({...st, exportedAt:new Date().toISOString(), v:4}, null, 2)], {type:'application/json'}), `kochbuch-backup-${dateStr()}.json`);
+  toast('✅ Backup exportiert');
+}
+function exportRecipes() {
+  dl(new Blob([JSON.stringify({rezepte:st.rezepte, exportedAt:new Date().toISOString(), v:4}, null, 2)], {type:'application/json'}), `kochbuch-rezepte-${dateStr()}.json`);
+  toast('✅ Rezepte exportiert');
+}
+function doImport(event, replace) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  if (replace && !confirm('⚠️ Alle bestehenden Daten werden ersetzt! Fortfahren?')) { event.target.value=''; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (replace) {
+        st = { rezepte:data.rezepte||[], plan:data.plan||emptyPlan(), checked:data.checked||{} };
+        if (!Array.isArray(st.plan) || typeof st.plan[0] !== 'object') st.plan = emptyPlan();
+        toast(`✅ ${st.rezepte.length} Rezepte importiert`);
+      } else {
+        const names = new Set(st.rezepte.map(r=>r.name.toLowerCase()));
+        const neu = (data.rezepte||[]).filter(r=>!names.has(r.name.toLowerCase()));
+        neu.forEach(r => r.id = uid());
+        st.rezepte.push(...neu);
+        toast(`✅ ${neu.length} neue Rezepte hinzugefügt`);
+      }
+      saveSt(); closeBackup(); render();
+    } catch { alert('❌ Ungültige JSON-Datei'); }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+function makeQR() {
+  const url = (document.getElementById('qr-in').value||'').trim();
+  if (!url) { toast('Bitte URL eingeben'); return; }
+  const cv = document.getElementById('qr-cv');
+  cv.innerHTML = '';
+  document.getElementById('qr-out').style.display = 'block';
+  document.getElementById('qr-url').textContent = url;
+  if (typeof QRCode === 'undefined') { cv.innerHTML='<p style="color:var(--terra);font-size:13px;">QR-Bibliothek lädt – kurz warten.</p>'; return; }
+  new QRCode(cv, { text:url, width:200, height:200, colorDark:'#2D4A3E', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PWA INSTALL
+// ═══════════════════════════════════════════════════════════════
+let dip = null;
+const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+function showBanner(text, hideBtn) {
+  if (standalone) return;
+  document.getElementById('itext').textContent = text;
+  document.getElementById('ibtn').style.display = hideBtn ? 'none' : '';
+  document.getElementById('ibanner').style.display = 'flex';
+}
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); dip = e;
+  showBanner('📲 App installieren — kein App Store nötig!', false);
+});
+document.getElementById('ibtn').addEventListener('click', async () => {
+  if (!dip) return;
+  dip.prompt();
+  const { outcome } = await dip.userChoice;
+  if (outcome === 'accepted') { document.getElementById('ibanner').style.display='none'; toast('🎉 App installiert!'); }
+  dip = null;
+});
+if (isIOS && !standalone) showBanner('📲 iOS: Teilen ↑ → „Zum Home-Bildschirm" antippen', true);
+
+// ═══════════════════════════════════════════════════════════════
+// SERVICE WORKER
+// ═══════════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+(async () => {
+  await loadSt();
+  render();
+})();
+</script>
+
+
+<script>
+
+// ═══════════════════════════════════════════════════════════════
+// ZUTATEN TAB — zentrale Zutatenpflege
+// ═══════════════════════════════════════════════════════════════
+let zFilter = '';
+let zEditKey = null; // key of zutat being edited in modal
+
+function zutatenHTML() {
+  const db = loadPreisDB();
+  const entries = Object.values(db)
+    .filter(z => z.name.toLowerCase().includes(zFilter.toLowerCase()))
+    .sort((a,b) => a.name.localeCompare(b.name));
+
+  const rows = entries.map(z => {
+    const nw = z.nw100 || {};
+    return `
+      <div style="background:var(--cr);border:1px solid var(--bd);border-radius:10px;padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;">
+        <div style="flex:1;min-width:140px;">
+          <div style="font-weight:700;color:var(--green);font-size:15px;margin-bottom:4px;">
+            ${esc(z.name)}
+          </div>
+          ${z.datum ? `<div style="font-size:10px;color:var(--mut);">Stand: ${esc(z.datum)}</div>` : ''}
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          ${z.nw100 ? `
+            <div style="display:flex;gap:8px;font-size:11px;background:var(--gl);border-radius:8px;padding:5px 10px;">
+              <span>🔥 <b>${nw.kcal||0}</b> kcal</span>
+              <span>🥩 <b>${nw.ew||0}</b>g</span>
+              <span>🍞 <b>${nw.kh||0}</b>g</span>
+              <span>🫒 <b>${nw.ft||0}</b>g</span>
+              <span style="color:var(--mut);">/ 100g</span>
+            </div>` : '<span style="font-size:11px;color:var(--mut);">Keine Nährwerte</span>'}
+
+          ${z.preis100!==undefined ? `
+            <div style="background:#FFF3E8;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;color:var(--terra);">
+              💶 ${typeof z.preis100==='number'?z.preis100.toFixed(2).replace('.',','):z.preis100} ${z.preisEinheit||'€/100g'}
+            </div>` : '<span style="font-size:11px;color:var(--mut);">Kein Preis</span>'}
+        </div>
+
+        <div style="display:flex;gap:6px;align-items:center;margin-left:auto;">
+          <button class="bs sm" onclick="openZutatEdit('${esc(z.name.toLowerCase().trim().replace(/'/g,"\\'"))}')">✏️</button>
+          <button class="bd sm" onclick="delZutat('${esc(z.name.toLowerCase().trim().replace(/'/g,"\\'"))}')">🗑</button>
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+      <div>
+        <h2 class="st">Zutaten-Datenbank</h2>
+        <p class="sub">${Object.keys(db).length} Zutaten gespeichert</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+       <input id="ingredients-search" class="fi" style="width:180px;" placeholder="🔍 Suchen…" value="${esc(zFilter)}" oninput="zFilter=this.value;render()">
+          oninput="zFilter=this.value;render()">
+        <button class="bp" onclick="openZutatEdit(null)">+ Neue Zutat</button>
+      </div>
+    </div>
+
+    ${entries.length === 0 ? `
+      <div class="empty">
+        <div class="ei">🥕</div>
+        <p style="color:var(--mut);">Noch keine Zutaten gepflegt.<br>
+        Zutaten werden automatisch hinzugefügt wenn du sie in Rezepten per Barcode scannst oder Preise eingibst.</p>
+      </div>` : `<div style="display:flex;flex-direction:column;gap:10px;">${rows}</div>`}`;
+}
+
+function delZutat(key) {
+  if (!confirm('Zutat wirklich aus der Datenbank löschen?')) return;
+  deleteFromPreisDB(key);
+  render();
+  toast('Zutat gelöscht');
+}
+
+// ── Zutat Edit Modal ─────────────────────────────────────────────────────────
+function openZutatEdit(key) {
+  zEditKey = key;
+  const db = loadPreisDB();
+  const z = key ? (db[key] || {name:'', preis100:undefined, preisEinheit:'€/100g', nw100:null}) : {name:'', preis100:undefined, preisEinheit:'€/100g', nw100:null};
+
+  const nw = z.nw100 || {};
+  const old = document.getElementById('zedit-ov');
+  if (old) old.remove();
+
+  const d = document.createElement('div');
+  d.className = 'ov';
+  d.id = 'zedit-ov';
+  d.style.zIndex = '6000';
+  d.onclick = e => { if (e.target===d) d.remove(); };
+  d.innerHTML = `
+    <div class="mo" style="max-width:500px;">
+      <div class="mh">
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--green);font-weight:700;">
+          ${key ? '✏️ Zutat bearbeiten' : '🥕 Neue Zutat'}
+        </div>
+        <button class="mc" onclick="document.getElementById('zedit-ov').remove()">✕</button>
+      </div>
+
+      <!-- Name + Barcode -->
+      <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:14px;">
+        <div style="flex:1;">
+          <label class="fl">Name *</label>
+          <input class="fi" id="ze-name" value="${esc(z.name)}" placeholder="z.B. Vollmilch"
+            ${key ? 'readonly style="background:#f0f0f0;"' : ''}>
+        </div>
+        <button class="bi" onclick="zScanBarcode()" title="Barcode scannen">🔍</button>
+      </div>
+
+      <!-- Preis + Einheit -->
+      <div class="fg">
+        <label class="fl">Preis</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input class="fi" type="number" id="ze-preis" min="0" step="0.01" inputmode="decimal"
+            style="width:110px;" placeholder="0,00" value="${z.preis100??''}">
+          <select class="fsel" id="ze-einheit" style="flex:1;">
+            ${['€/100g','€/kg','€/100ml','€/L','€/Stück','€/Packung'].map(u =>
+              `<option${(z.preisEinheit||'€/100g')===u?' selected':''}>${u}</option>`).join('')}
+          </select>
+        </div>
+        ${z.datum ? `<p style="font-size:11px;color:var(--mut);margin-top:4px;">Letzter Stand: ${esc(z.datum)}</p>` : ''}
+      </div>
+
+      <!-- Nährwerte -->
+      <div style="background:var(--gl);border-radius:10px;padding:14px;margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <label class="fl" style="margin:0;">Nährwerte <span style="font-weight:400;text-transform:none;">(pro 100g)</span></label>
+          <span style="font-size:11px;color:var(--mut);">Via Barcode 🔍 oder manuell</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
+          ${[['kcal','🔥 kcal'],['ew','🥩 Eiweiß'],['kh','🍞 KH'],['ft','🫒 Fett']].map(([k,l]) => `
+            <div>
+              <label class="fl" style="font-size:9px;">${l}/100g</label>
+              <input class="fi" type="number" min="0" inputmode="decimal" id="ze-${k}"
+                style="padding:7px 8px;" value="${nw[k]??''}" placeholder="–">
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button class="bs" onclick="document.getElementById('zedit-ov').remove()">Abbrechen</button>
+        <button class="bp" onclick="saveZutatEdit()">💾 Speichern</button>
+      </div>
+    </div>`;
+  document.body.appendChild(d);
+}
+
+// Barcode scan specifically for zutat edit modal
+function zScanBarcode() {
+  scanTarget = 'zedit'; // special target
+  document.getElementById('scan-label').textContent = '🔍 Zutat scannen';
+  document.getElementById('mbc').value = '';
+  setScanMsg('Kamera startet…', '');
+  document.body.appendChild(document.getElementById('scan-ov'));
+  document.getElementById('scan-ov').classList.remove('hidden');
+  startCam();
+}
+
+function saveZutatEdit() {
+  const name = (document.getElementById('ze-name').value || '').trim();
+  if (!name) { alert('Bitte einen Namen eingeben.'); return; }
+  const preis100Raw = document.getElementById('ze-preis').value;
+  const preis100 = preis100Raw==='' ? undefined : Number(preis100Raw);
+  const preisEinheit = document.getElementById('ze-einheit').value;
+  const nw100 = {};
+  let hasNW = false;
+  ['kcal','ew','kh','ft'].forEach(k => {
+    const v = document.getElementById('ze-'+k)?.value;
+    if (v!==''&&v!==undefined&&v!==null) { nw100[k]=Number(v); hasNW=true; }
+  });
+
+  // If name changed (new zutat), delete old key
+  if (zEditKey && zEditKey !== name.toLowerCase().trim()) {
+    deleteFromPreisDB(zEditKey);
+  }
+
+  savePreisToDB(name, preis100, {
+    preisEinheit,
+    nw100: hasNW ? nw100 : undefined,
+  });
+
+  document.getElementById('zedit-ov').remove();
+  render();
+  toast(`✅ ${name} gespeichert`);
+}
+
+// Handle scan result for zedit modal
+function applyScan(result) {
+  if (scanTarget === 'zedit') {
+    // Fill zedit modal fields
+    if (result.name) {
+      const ni = document.getElementById('ze-name');
+      if (ni && !ni.readOnly) ni.value = result.name;
+    }
+    if (result.nw100) {
+      ['kcal','ew','kh','ft'].forEach(k => {
+        const el = document.getElementById('ze-'+k);
+        if (el) el.value = result.nw100[k] ?? '';
+      });
+    }
+    toast('✅ Barcode-Daten übernommen');
+    return;
+  }
+  applyScanRezept(result);
+}
+
+</script>
+
+</body>
+</html>
